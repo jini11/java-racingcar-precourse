@@ -23,6 +23,7 @@ public class Car {
     }
 
     private boolean validateLength(String name) {
-        return name.length() > 5;
+        name = name.replace(" ", "");
+        return name.length() > 5 || name.length() == 0;
     }
 }
