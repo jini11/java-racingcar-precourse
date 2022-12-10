@@ -54,6 +54,7 @@ public class GameController {
     private void playGame(int round, List<Car> cars) {
         for (int i = 0; i < round; i++) {
             playRound(cars);
+            outputView.printMap(cars);
         }
     }
 
