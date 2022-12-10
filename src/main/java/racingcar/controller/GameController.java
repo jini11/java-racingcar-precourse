@@ -19,6 +19,7 @@ public class GameController {
 
     public void start() {
         List<Car> cars = makeCars();
+        int numberOfRound = inputView.readRound();
     }
 
     private List<Car> makeCars() {
