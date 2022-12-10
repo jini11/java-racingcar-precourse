@@ -6,6 +6,7 @@ import racingcar.view.InputView;
 import racingcar.view.OutputView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameController {
@@ -23,6 +24,7 @@ public class GameController {
     public void start() {
         List<Car> cars = makeCars();
         playGame(inputRound(), cars);
+        outputView.printWinner(calculateWinner(cars));
     }
 
     private List<Car> makeCars() {
@@ -52,6 +54,7 @@ public class GameController {
     }
 
     private void playGame(int round, List<Car> cars) {
+        outputView.printResult();
         for (int i = 0; i < round; i++) {
             playRound(cars);
             outputView.printMap(cars);
@@ -62,5 +65,19 @@ public class GameController {
         for (Car car : cars) {
             racingGame.moveOrStop(car);
         }
+    }
+
+    private List<String> calculateWinner(List<Car> cars) {
+        List<String> winner = new ArrayList<>();
+        int max = 0;
+        for (Car car : cars) {
+            if (max < car.getPosition()) {
+                max = car.getPosition();
+                winner = new ArrayList<>(Collections.singleton(car.getName()));
+            } else if (max == car.getPosition()) {
+                winner.add(car.getName());
+            }
+        }
+        return winner;
     }
 }
