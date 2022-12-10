@@ -26,4 +26,16 @@ public class Car {
         name = name.replace(" ", "");
         return name.length() > 5 || name.length() == 0;
     }
+
+    public void move() {
+        position++;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPosition() {
+        return position;
+    }
 }
