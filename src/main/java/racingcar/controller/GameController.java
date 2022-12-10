@@ -1,6 +1,7 @@
 package racingcar.controller;
 
 import racingcar.model.Car;
+import racingcar.model.Cars;
 import racingcar.service.RacingGame;
 import racingcar.view.InputView;
 import racingcar.view.OutputView;
@@ -13,6 +14,7 @@ public class GameController {
     private InputView inputView;
     private OutputView outputView;
     private Car car;
+    private Cars cars;
     private RacingGame racingGame;
 
     public GameController() {
@@ -22,9 +24,9 @@ public class GameController {
     }
 
     public void start() {
-        List<Car> cars = makeCars();
-        playGame(inputRound(), cars);
-        outputView.printWinner(calculateWinner(cars));
+        cars = new Cars(makeCars());
+        playGame(inputRound());
+        outputView.printWinner(cars.calculateWinner());
     }
 
     private List<Car> makeCars() {
@@ -53,31 +55,17 @@ public class GameController {
         }
     }
 
-    private void playGame(int round, List<Car> cars) {
+    private void playGame(int round) {
         outputView.printResult();
         for (int i = 0; i < round; i++) {
-            playRound(cars);
-            outputView.printMap(cars);
+            playRound();
+            outputView.printMap(cars.getCars());
         }
     }
 
-    private void playRound(List<Car> cars) {
-        for (Car car : cars) {
+    private void playRound() {
+        for (Car car : cars.getCars()) {
             racingGame.moveOrStop(car);
         }
-    }
-
-    private List<String> calculateWinner(List<Car> cars) {
-        List<String> winner = new ArrayList<>();
-        int max = 0;
-        for (Car car : cars) {
-            if (max < car.getPosition()) {
-                max = car.getPosition();
-                winner = new ArrayList<>(Collections.singleton(car.getName()));
-            } else if (max == car.getPosition()) {
-                winner.add(car.getName());
-            }
-        }
-        return winner;
     }
 }

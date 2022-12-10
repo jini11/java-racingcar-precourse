@@ -32,8 +32,8 @@ public class OutputView {
         }
     }
 
-    public void printWinner(List<String> winner) {
+    public void printWinner(String winner) {
         System.out.print(WINNER_MESSAGE);
-        System.out.println(winner.stream().collect(Collectors.joining(", ")));
+        System.out.println(winner);
     }
 }
