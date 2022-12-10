@@ -19,7 +19,7 @@ public class GameController {
 
     public void start() {
         List<Car> cars = makeCars();
-        int numberOfRound = inputView.readRound();
+        int round = inputRound();
     }
 
     private List<Car> makeCars() {
@@ -39,4 +39,12 @@ public class GameController {
         return cars;
     }
 
+    private int inputRound() {
+        try {
+            return inputView.readRound();
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return inputRound();
+        }
+    }
 }

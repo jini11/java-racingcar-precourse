@@ -16,8 +16,26 @@ public class InputView {
 
     public int readRound() {
         System.out.println(INPUT_ROUND);
-        int round = Integer.parseInt(Console.readLine());
+        String round = Console.readLine();
+        validateRound(round);
         System.out.println();
-        return round;
+        return Integer.parseInt(round);
+    }
+
+    private void validateRound(String round) {
+        if (validateType(round)) {
+            throw new IllegalArgumentException("[ERROR]");
+        }
+        if (validateRange(Integer.parseInt(round))) {
+            throw new IllegalArgumentException("[ERROR]");
+        }
+    }
+
+    private boolean validateType(String round) {
+        return !round.matches("^[0-9]*$");
+    }
+
+    private boolean validateRange(int round) {
+        return round <= 0;
     }
 }
