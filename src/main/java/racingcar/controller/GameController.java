@@ -2,24 +2,40 @@ package racingcar.controller;
 
 import racingcar.model.Car;
 import racingcar.view.InputView;
+import racingcar.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
     private InputView inputView;
+    private OutputView outputView;
     private Car car;
+
     public GameController() {
         inputView = new InputView();
+        outputView = new OutputView();
     }
 
     public void start() {
-        List<String> carNames = inputView.readCarName();
-        makeCar(carNames);
+        List<Car> cars = makeCars();
     }
 
-    private void makeCar(List<String> carNames) {
-        for (String carName : carNames) {
-            car = new Car(carName);
+    private List<Car> makeCars() {
+        try {
+            return makeCar(inputView.readCarName());
+        } catch (IllegalArgumentException e) {
+            outputView.printError(e.getMessage());
+            return makeCars();
         }
     }
+
+    private List<Car> makeCar(List<String> carNames) {
+        List<Car> cars = new ArrayList<>();
+        for (String carName : carNames) {
+            cars.add(new Car(carName));
+        }
+        return cars;
+    }
+
 }
